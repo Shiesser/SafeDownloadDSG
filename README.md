@@ -15,6 +15,10 @@ Run the GUI application with:
 python3 main.py
 ```
 
+**Note:** The GUI requires a graphical environment. If you run this command
+in a headless environment without a display server, `tkinter` will raise a
+`TclError`.
+
 On the **YT-DownloadSafe** tab, paste a YouTube URL and choose one of the available formats:
 
 - **MP4 best** – download the best quality video and audio
