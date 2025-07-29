@@ -15,4 +15,10 @@ Run the GUI application with:
 python3 main.py
 ```
 
-On the **YT-DownloadSafe** tab, paste a YouTube URL and choose the desired format (MP4 or MP3). The tool will invoke `yt-dlp` with appropriate options to download the video or extract audio.
+On the **YT-DownloadSafe** tab, paste a YouTube URL and choose one of the available formats:
+
+- **MP4 best** – download the best quality video and audio
+- **MP4 1080p** – limit video quality to 1080p if available
+- **MP3 audio** – extract audio only as MP3
+
+The tool invokes `yt-dlp` with appropriate options based on the selection.

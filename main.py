@@ -24,15 +24,17 @@ class YTDownloadFrame(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
         self.url_var = tk.StringVar()
-        self.format_var = tk.StringVar(value="mp4")
+        self.format_var = tk.StringVar(value="MP4 best")
 
         ttk.Label(self, text="YouTube URL:").grid(row=0, column=0, pady=5, sticky="w")
         ttk.Entry(self, textvariable=self.url_var, width=50).grid(row=0, column=1, padx=5)
 
         format_frame = ttk.LabelFrame(self, text="Format")
         format_frame.grid(row=1, column=0, columnspan=2, pady=5, sticky="we")
-        ttk.Radiobutton(format_frame, text="MP4", variable=self.format_var, value="mp4").pack(side=tk.LEFT, padx=10)
-        ttk.Radiobutton(format_frame, text="MP3", variable=self.format_var, value="mp3").pack(side=tk.LEFT, padx=10)
+
+        options = ["MP4 best", "MP4 1080p", "MP3 audio"]
+        self.format_combo = ttk.Combobox(format_frame, values=options, textvariable=self.format_var, state="readonly")
+        self.format_combo.pack(fill=tk.X, padx=10, pady=5)
 
         ttk.Button(self, text="Download", command=self.download).grid(row=2, column=0, columnspan=2, pady=10)
 
@@ -43,9 +45,14 @@ class YTDownloadFrame(ttk.Frame):
             messagebox.showerror("Error", "Please enter a YouTube URL")
             return
 
-        if fmt == "mp3":
+        if fmt == "MP3 audio":
             cmd = f"yt-dlp -x --audio-format mp3 {shlex.quote(url)}"
-        else:
+        elif fmt == "MP4 1080p":
+            cmd = (
+                "yt-dlp -f \"bv[height<=1080]+ba/b[height<=1080]\" --merge-output-format mp4 "
+                f"{shlex.quote(url)}"
+            )
+        else:  # MP4 best
             cmd = f"yt-dlp -f bestvideo+bestaudio --merge-output-format mp4 {shlex.quote(url)}"
 
         try:
